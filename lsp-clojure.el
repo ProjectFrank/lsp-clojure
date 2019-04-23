@@ -27,5 +27,15 @@
          (current-column)
          binding-name)))
 
+(defun lsp-clojure-thread-first-all ()
+  "Apply thread-first-all refactoring at point."
+  (interactive)
+  (lsp--cur-workspace-check)
+  (lsp--send-execute-command
+   "thread-first-all"
+   (list (concat "file://" buffer-file-name)
+         (- (line-number-at-pos) 1) ;; clojure-lsp expects line numbers to start at 0
+         (current-column))))
+
 (provide 'lsp-clojure)
 ;;; lsp-clojure.el ends here
