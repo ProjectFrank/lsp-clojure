@@ -16,5 +16,16 @@
          (current-column)
          binding-name)))
 
+(defun lsp-clojure-introduce-let (binding-name)
+  "Move form at point into a new let binding as BINDING-NAME."
+  (interactive "MBinding name: ") ;; Name of the let binding
+  (lsp--cur-workspace-check)
+  (lsp--send-execute-command
+   "introduce-let"
+   (list (concat "file://" buffer-file-name)
+         (- (line-number-at-pos) 1) ;; clojure-lsp expects line numbers to start at 0
+         (current-column)
+         binding-name)))
+
 (provide 'lsp-clojure)
 ;;; lsp-clojure.el ends here
